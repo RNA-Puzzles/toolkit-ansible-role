@@ -10,7 +10,7 @@ docker pull rnapuzles/toolkit
 docker run --publish 8888:8888 --name toolkit rnapuzles/toolkit
 ```
 
-The Jupyter notebook with RNA-Puzzles Toolkit examples will be available in your browser at address `http://localhost:8888`. To kill the running container, execute:
+The Jupyter notebook with RNA-Puzzles Toolkit examples will be available in your browser at address `http://localhost:8888`. The default password is `demo`. To kill the running container, execute:
 ```
 docker kill toolkit
 ```
