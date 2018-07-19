@@ -5,14 +5,14 @@ settings:
     # The Conductor container does the heavy lifting, and provides a portable
     # Python runtime for building your target containers. It should be derived
     # from the same distribution as you're building your target containers with.
-    base: ubuntu:zesty
+    base: ubuntu:xenial
     # roles_path:   # Specify a local path containing Ansible roles
     # volumes:      # Provide a list of volumes to mount
     # environment:  # List or mapping of environment variables
 
   # Set the name of the project. Defaults to basename of the project directory.
   # For built services, concatenated with service name to form the built image name.
-  project_name: rna-bench-container
+  project_name: rna-puzzles
 
   # The deployment_output_path is mounted to the Conductor container, and the 
   # `run` and `deployment` commands then write generated Ansible playbooks to it.
@@ -48,10 +48,18 @@ settings:
   #  display_name:
 
 services:
-  rna-bench:
-    from: 'ubuntu:zesty'
+  toolkit:
+    from: 'ubuntu:xenial'
+    user: demo
+    command: ['jupyter', 'notebook', '--no-browser', '--ip=0.0.0.0', '--port=8888']
+    working_dir: /home/demo
+    tmpfs: ['/tmp']
+    ports:
+      - 8888:8888
     roles:
-      - rna-bench
+      - rna-puzzles-toolkit
+    environment:
+      - PYTHONPATH=/home/demo/rna-puzzles-toolkit/rna-pdb-tools
   # Add your containers here, specifying the base image you want to build from.
   # To use this example, uncomment it and delete the curly braces after services key.
   # You may need to run `docker pull ubuntu:trusty` for this to work.

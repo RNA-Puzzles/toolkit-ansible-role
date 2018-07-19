@@ -1,0 +1,122 @@
+---
+- name: check if sudo is present
+  stat:
+    path: /usr/bin/sudo
+  register: sudo
+
+- name: install sudo if not present
+  apt:
+    name: '{{ item }}'
+    state: present
+    update_cache: yes
+  with_items:
+    - libssl-dev
+    - sudo
+  become: yes
+  become_method: su
+  when: not sudo.stat.exists
+
+- name: install required software
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - ca-certificates
+    - default-jdk-headless
+    - git
+    - python3
+    - python3-pip
+    - unzip
+  become: yes
+
+- name: clean apt cache
+  command: apt-get clean
+  become: yes
+
+- name: install python dependencies
+  pip:
+    executable: pip3
+    name:
+      - jupyter
+      - nglview
+  become: yes
+
+- name: create demo user
+  user:
+    createhome: yes
+    name: demo
+    shell: /bin/bash
+    state: present
+  become: yes
+
+- name: create required directories
+  file:
+    path: /home/demo/rna-puzzles-toolkit/mcq-cli
+    state: directory
+  become: yes
+  become_user: demo
+
+- name: download and unarchive mcq-cli
+  unarchive:
+    validate_certs: no # FIXME: this is a workaround for: https://github.com/ansible/ansible/issues/38672
+    creates: /home/demo/rna-puzzles-toolkit/mcq-cli/global
+    dest: /home/demo/rna-puzzles-toolkit/mcq-cli
+    remote_src: yes
+    src: '{{ mcq_cli_url }}'
+  become: yes
+  become_user: demo
+
+- name: git-clone basic assess metrics
+  git:
+    dest: /home/demo/rna-puzzles-toolkit/basic-assess-metrics
+    repo: '{{ basic_assess_metrics_url }}'
+    version: '{{ basic_assess_metrics_version }}'
+  become: yes
+  become_user: demo
+
+- name: git-clone deformation profile
+  git:
+    dest: /home/demo/rna-puzzles-toolkit/deformation-profile
+    repo: '{{ deformation_profile_url }}'
+    version: '{{ deformation_profile_version }}'
+  become: yes
+  become_user: demo
+
+- name: git-clone rna-pdb-tools
+  git:
+    dest: /home/demo/rna-puzzles-toolkit/rna-pdb-tools
+    repo: '{{ rna_pdb_tools_url }}'
+    version: '{{ rna_pdb_tools_version }}'
+  become: yes
+  become_user: demo
+
+- name: install rna-pdb-tools requirements
+  pip:
+    executable: pip3
+    requirements: /home/demo/rna-puzzles-toolkit/rna-pdb-tools/docs/requirements.txt
+  become: yes
+
+- name: download and unarchive rnaqua
+  unarchive:
+    validate_certs: no # FIXME: this is a workaround for: https://github.com/ansible/ansible/issues/38672
+    creates: /home/demo/rna-puzzles-toolkit/rnaqua-binary
+    dest: /home/demo/rna-puzzles-toolkit
+    remote_src: yes
+    src: '{{ rnaqua_url }}'
+  become: yes
+  become_user: demo
+
+- name: generate default config for jupyter
+  command: jupyter notebook --generate-config
+  args:
+    creates: /home/demo/.jupyter/jupyter_notebook_config.py
+  become: yes
+  become_user: demo
+
+- name: transfer sha256 of the default password
+  copy:
+    src: files/dot-jupyter/jupyter_notebook_config.json
+    dest: /home/demo/.jupyter/jupyter_notebook_config.json
+    owner: demo
+    group: demo
+  become: yes

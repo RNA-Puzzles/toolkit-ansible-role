@@ -1,0 +1,5 @@
+---
+- hosts: ubuntu
+  remote_user: ubuntu
+  roles:
+    - rna-puzzles-toolkit
