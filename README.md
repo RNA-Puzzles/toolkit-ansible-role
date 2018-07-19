@@ -1,7 +1,24 @@
 # toolkit-ansible-role
 Ansible role for RNA-Puzzles Toolkit. Contains ansible-container config and an example playbook.
 
-Currently supports Ubuntu only. Tested with Ubuntu Xenial.
+Currently the role supports Ubuntu only. It was tested with Ubuntu Xenial.
+
+# Docker image
+This Ansible role is used to create Docker images which are available in Docker Hub as `rnapuzzles/toolkit`. If you are here just to use RNA-Puzzles Toolkit, you can use that image directly:
+```
+docker pull rnapuzles/toolkit
+docker run --publish 8888:8888 --name toolkit rnapuzles/toolkit
+```
+
+The Jupyter notebook with RNA-Puzzles Toolkit examples will be available in your browser at address `http://localhost:8888`. To kill the running container, execute:
+```
+docker kill toolkit
+```
+
+To access RNA-Puzzles Toolkit directly, start Docker image within a shell:
+```
+docker run --interactive --tty rnapuzzles/toolkit /bin/bash
+```
 
 # How to build and use Docker container image with RNA-Puzzles Toolkit
 The repository contains configuration for ansible-container which uses roles and docker-compose-like syntax to describe creation of container images using Ansible. 
