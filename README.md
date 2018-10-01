@@ -7,7 +7,7 @@ Currently the role supports Ubuntu only. It was tested with Ubuntu Xenial.
 This Ansible role is used to create Docker images which are available in Docker Hub as `rnapuzzles/toolkit`. If you are here just to use RNA-Puzzles Toolkit, you can use that image directly:
 ```
 docker pull rnapuzles/toolkit
-docker run --publish 8888:8888 --name toolkit rnapuzles/toolkit
+docker run --publish 8888:8888 --name toolkit rnapuzzles/toolkit
 ```
 
 The Jupyter notebook with RNA-Puzzles Toolkit examples will be available in your browser at address `http://localhost:8888`. The default password is `demo`. To kill the running container, execute:
