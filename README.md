@@ -6,7 +6,7 @@ Currently the role supports Ubuntu only. It was tested with Ubuntu Xenial.
 # Docker image
 This Ansible role is used to create Docker images which are available in Docker Hub as `rnapuzzles/toolkit`. If you are here just to use RNA-Puzzles Toolkit, you can use that image directly:
 ```
-docker pull rnapuzles/toolkit
+docker pull rnapuzzles/toolkit
 docker run --publish 8888:8888 --name toolkit rnapuzzles/toolkit
 ```
 
