@@ -3,9 +3,10 @@ basic_assess_metrics_url: https://github.com/RNA-Puzzles/BasicAssessMetrics.git
 basic_assess_metrics_version: master
 deformation_profile_url: https://github.com/RNA-Puzzles/DeformationProfile.git
 deformation_profile_version: master
-mcq_cli_url: https://github.com/RNA-Puzzles/mcq-cli/releases/download/v{{ mcq_cli_version }}.1/mcq-cli-{{ mcq_cli_version }}.tar.gz
-mcq_cli_version: 1.2-beta
+mcq_cli_url: https://github.com/RNA-Puzzles/mcq-parent/releases/download/{{ mcq_cli_version }}/mcq-cli-{{ mcq_cli_version }}.tar.gz
+mcq_cli_version: 1.4
 rna_pdb_tools_url: https://github.com/RNA-Puzzles/rna-pdb-tools.git
 rna_pdb_tools_version: master
 rnaqua_url: https://github.com/RNA-Puzzles/rnaqua/releases/download/v{{ rnaqua_version }}/rnaqua-binary.zip
 rnaqua_version: 1.0
+r_mirror_url: http://mirrors.nic.cz/R/
